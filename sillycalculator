@@ -1,0 +1,23 @@
+package main
+import "fmt"
+func main(){
+    var a,b float64
+    var s string
+    fmt.Scan(&a,&b,&s)
+    switch s {
+    case "+" : 
+        fmt.Print(a+b)
+    case "-" : 
+        fmt.Print(a-b)
+    case "*" : 
+        fmt.Print(a*b)
+    case "/" : 
+        if b!=0 {
+            fmt.Print(a/b)
+        } else {
+            fmt.Print("Делить на ноль нельзя!")
+        }
+    case "%" : 
+        fmt.Print(int(a)%int(b))
+    }
+}
