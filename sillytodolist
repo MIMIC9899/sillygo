@@ -1,0 +1,60 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	fmt.Println("Welcome to the TO DO List CLI app!")
+	reader := bufio.NewReader(os.Stdin)
+
+	var tasks []string
+	for {
+		fmt.Println()
+		fmt.Println("Enter your command (create, read, update, delete):")
+
+		var command string
+		command, _ = reader.ReadString('\n')
+		command = strings.TrimSpace(command)
+		switch command {
+		case "create":
+			fmt.Println("Enter task name: ")
+			task, _ := reader.ReadString('\n')
+			task = strings.TrimSpace(task)
+			tasks = append(tasks, task)
+		case "read":
+			for i := 1; i <= len(tasks); i++ {
+				fmt.Println(i, tasks[i-1])
+			}
+		case "update":
+			fmt.Println("Enter task name to update: ")
+			task, _ := reader.ReadString('\n')
+			task = strings.TrimSpace(task)
+			for i := 0; i < len(tasks); i++ {
+				if task == tasks[i] {
+					fmt.Println("Enter new task name: ")
+					newTask, _ := reader.ReadString('\n')
+					newTask = strings.TrimSpace(newTask)
+					tasks[i] = newTask
+					fmt.Print("Updated task #", i+1, " with name ", newTask, " successfully!\n")
+					break
+				}
+			}
+		case "delete":
+			fmt.Println("Enter task name to remove: ")
+			task, _ := reader.ReadString('\n')
+			for i := 0; i < len(tasks); i++ {
+				if task == tasks[i] {
+					tasks = append(tasks[:i], tasks[i+1:]...)
+					fmt.Print("Removed task #", i+1, " with name ", task, " successfully!\n")
+					break
+				}
+			}
+		default:
+			fmt.Println("Invalid command! Please, try again!")
+		}
+	}
+}
