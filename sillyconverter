@@ -1,0 +1,74 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	fmt.Println("Добро пожаловать в конвертер валют!")
+	reader := bufio.NewReader(os.Stdin)
+
+	var rates = map[string]float64{
+		"USD": 1.0,   // Доллар США
+		"EUR": 0.92,  // Евро
+		"RUB": 90.0,  // Российский рубль
+		"JPY": 157.0, // Японская иена
+		"CNY": 7.25,  // Китайский юань
+		"GBP": 0.78,  // Британский фунт
+		"KZT": 460.0, // Казахстанский тенге
+		"TRY": 32.5,  // Турецкая лира
+		"INR": 83.0,  // Индийская рупия
+		"BRL": 5.12,  // Бразильский реал
+		"AUD": 1.50,  // Австралийский доллар
+		"CAD": 1.36,  // Канадский доллар
+		"CHF": 0.89,  // Швейцарский франк
+		"SEK": 10.8,  // Шведская крона
+		"NOK": 10.5,  // Норвежская крона
+	}
+	var numRates = map[int]string{
+		1:  "USD", // Доллар США
+		2:  "EUR", // Евро
+		3:  "RUB", // Российский рубль
+		4:  "JPY", // Японская иена
+		5:  "CNY", // Китайский юань
+		6:  "GBP", // Британский фунт
+		7:  "KZT", // Казахстанский тенге
+		8:  "TRY", // Турецкая лира
+		9:  "INR", // Индийская рупия
+		10: "BRL", // Бразильский реал
+		11: "AUD", // Австралийский доллар
+		12: "CAD", // Канадский доллар
+		13: "CHF", // Швейцарский франк
+		14: "SEK", // Шведская крона
+		15: "NOK", // Норвежская крона
+	}
+	for {
+		fmt.Println("Доступные валюты для конвертации:")
+		for i := 1; i <= len(numRates); i++ {
+			fmt.Print(i, ". ", numRates[i], "\n")
+		}
+		fmt.Print("Введите сумму в USD: ")
+		sum, _ := reader.ReadString('\n')
+		sum = strings.TrimSpace(sum)
+		sumI, _ := strconv.Atoi(sum)
+		sumF := float64(sumI)
+		if sumF <= 0 {
+			fmt.Println("Сумма должна превышать 0!")
+			continue
+		}
+		fmt.Println("Введите номер валюты для конвертации из списка выше:")
+		rate, _ := reader.ReadString('\n')
+		rate = strings.TrimSpace(rate)
+		rateI, _ := strconv.Atoi(rate)
+		if rateI >= len(numRates) || rateI <= 0 {
+			fmt.Println("Неправильный выбор валюты!")
+			continue
+		}
+
+		fmt.Println(sumF, "USD =", rates[numRates[rateI]]*sumF, numRates[rateI])
+	}
+}
